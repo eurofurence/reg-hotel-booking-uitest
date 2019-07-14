@@ -75,7 +75,7 @@ Implemented using [testcafe](https://github.com/DevExpress/testcafe) in JavaScri
  - E13 TODO: On the email page, there is an easy to understand way to get back to the form page 
  - E14 TODO: On the email page, the page states how long until the secret code will be made available, and then
    it automatically reloads with all information intact
-     
+
 ## Manual Test Cases / Code Verification
 
  - Check that it uses server side script response for time to activation of secret code

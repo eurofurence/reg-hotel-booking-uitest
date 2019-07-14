@@ -1,4 +1,4 @@
-import {Selector, ClientFunction} from 'testcafe';
+import {ClientFunction, Selector} from 'testcafe';
 
 export class TitlePage {
     constructor(t) {
@@ -225,6 +225,28 @@ export class FormPage {
             .expect(this.fields.arrival.value).eql(expectedArrival)
             .expect(this.fields.departure.value).eql(expectedDeparture);
     }
+
+    async acceptDisclaimer() {
+        await this.t
+            .click(this.fields.disclaimer)
+            .expect(this.fields.disclaimer.checked).eql(true);
+    }
+
+    async submit() {
+        await this.t
+            .expect(this.navs.submitButton.getAttribute('class')).contains('active')
+            .setNativeDialogHandler(() => true)
+            .click(this.navs.submitButton);
+
+        const history = await this.t.getNativeDialogHistory();
+        await this.t
+            .expect(history.length).eql(0)
+            .expect(this.getLocation()).contains('/' + this.language + '/reservation-show.html');
+    }
+
+    toEmailPage() {
+        return new EmailPage(this.t, this.language);
+    }
 }
 
 export class EmailPage {
@@ -242,9 +264,8 @@ export class EmailPage {
 
 export class Pages {
     static async progressToFormPage(t) {
-        var p = new TitlePage(t);
+        const p = new TitlePage(t);
         await p.submit();
-        var fp = p.toFormPage();
-        return fp;
+        return p.toFormPage();
     }
 }
