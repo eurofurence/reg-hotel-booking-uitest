@@ -68,7 +68,9 @@ export class FormPage {
             submitButton: Selector('#submitbutton'),
         };
         this.labels = {
-            roomsize: [Selector('#size_single_label'), Selector('#size_double_label'), Selector('#size_triple_label')],
+            // TODO this label needs an id
+            // roomsize: Selector('#roomsize_label'),
+            roomsizes: [Selector('#size_single_label'), Selector('#size_double_label'), Selector('#size_triple_label')],
             // it makes no sense to have the labels for column 2 now that column 1 is editable
             // TODO change this in the app and here
             name: Selector('label[for="name2"]'),
@@ -79,11 +81,13 @@ export class FormPage {
             phone: Selector('label[for="phone2"]'),
             dates: Selector('label[for="arrival"]'),
             // TODO this label really needs an id
-            // roomtype: Selector('label[for="arrival"]'),
+            // roomtype: Selector('#roomtype_label'),
             roomtypes: [Selector('#roomtype1button'), Selector('#roomtype2button'), Selector('#roomtype3button')],
             price: [Selector('#roomtype1price'), Selector('#roomtype2price'), Selector('#roomtype3price')],
         };
         this.fields = {
+            // remember, you need to click the label, not the field, for radio buttons
+            roomsizes: [Selector('#size_single'), Selector('#size_double'), Selector('#size_triple')],
             name: [Selector('#name1'), Selector('#name2'), Selector('#name3')],
             street: [Selector('#street1'), Selector('#street2'), Selector('#street3')],
             city: [Selector('#city1'), Selector('#city2'), Selector('#city3')],
@@ -92,7 +96,8 @@ export class FormPage {
             phone: [Selector('#phone1'), Selector('#phone2'), Selector('#phone3')],
             arrival: Selector('#arrival'),
             departure: Selector('#departure'),
-            roomtype: [Selector('#roomtype1button'), Selector('#roomtype2button'), Selector('#roomtype3button')],
+            // remember, you need to click the label, not the field, for radio buttons
+            roomtypes: [Selector('#roomtype1'), Selector('#roomtype2'), Selector('#roomtype3')],
             comment: Selector('#comments'),
             disclaimer: Selector('#understood'),
         };
@@ -100,7 +105,7 @@ export class FormPage {
 
     async setRoomsize(sizeNo) {
         await this.t
-            .click(this.labels.roomsize[sizeNo - 1]);
+            .click(this.labels.roomsizes[sizeNo - 1]);
     }
 
     async _verifyInputDisabledState(selector, isDisabled) {
@@ -125,10 +130,14 @@ export class FormPage {
 
     async verifyInitialState() {
         await this.t
+            .expect(this.fields.roomsizes[0].checked).eql(true)
+            .expect(this.fields.roomsizes[1].checked).eql(false)
+            .expect(this.fields.roomsizes[2].checked).eql(false)
             .expect(this.fields.arrival.value).eql('08/14/2019')
             .expect(this.fields.departure.value).eql('08/18/2019')
-            // TODO how to get the value of a radio button????
-            // .expect(this.fields.roomtype[0].selected).eql(true)
+            .expect(this.fields.roomtypes[0].checked).eql(true)
+            .expect(this.fields.roomtypes[1].checked).eql(false)
+            .expect(this.fields.roomtypes[2].checked).eql(false)
             .expect(this.fields.disclaimer.checked).notOk()
     }
 
