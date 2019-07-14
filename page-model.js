@@ -179,4 +179,11 @@ export class EmailPage {
     }
 }
 
-
+export class Pages {
+    static async progressToFormPage(t) {
+        var p = new TitlePage(t);
+        await p.submit();
+        var fp = p.toFormPage();
+        return fp;
+    }
+}
