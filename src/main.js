@@ -64,3 +64,16 @@ test('F4: form page: filling in triple room works, shows correct prices', async 
     await TestData.fillThirdPerson(fp);
     await TestData.verifyTripleRoomPrices(fp);
 });
+
+test('F5: form page: can enter a long comment', async t => {
+    var fp = await Pages.progressToFormPage(t);
+    await TestData.enterLongComment(fp);
+});
+
+test('F6: form page: when disclaimer not accepted, get validation error and cannot generate email', async t => {
+    var fp = await Pages.progressToFormPage(t);
+    await TestData.fillFirstPerson(fp);
+
+    // TODO customize alert message depending on validation results
+    await fp.submitExpectingValidationError(TestData.expectedAlertMessage());
+});

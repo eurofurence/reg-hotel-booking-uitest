@@ -93,6 +93,7 @@ export class FormPage {
             arrival: Selector('#arrival'),
             departure: Selector('#departure'),
             roomtype: [Selector('#roomtype1button'), Selector('#roomtype2button'), Selector('#roomtype3button')],
+            comment: Selector('#comments'),
             disclaimer: Selector('#understood'),
         };
     }
@@ -133,37 +134,55 @@ export class FormPage {
 
     async setName(personNo, value) {
         await this.t
-            .typeText(this.fields.name[personNo - 1], value);
+            .typeText(this.fields.name[personNo - 1], value, {paste: true});
     }
 
     async setStreet(personNo, value) {
         await this.t
-            .typeText(this.fields.street[personNo - 1], value);
+            .typeText(this.fields.street[personNo - 1], value, {paste: true});
     }
 
     async setCity(personNo, value) {
         await this.t
-            .typeText(this.fields.city[personNo - 1], value);
+            .typeText(this.fields.city[personNo - 1], value, {paste: true});
     }
 
     async setCountry(personNo, value) {
         await this.t
-            .typeText(this.fields.country[personNo - 1], value);
+            .typeText(this.fields.country[personNo - 1], value, {paste: true});
     }
 
     async setEmail(personNo, value) {
         await this.t
-            .typeText(this.fields.email[personNo - 1], value);
+            .typeText(this.fields.email[personNo - 1], value, {paste: true});
     }
 
     async setPhone(personNo, value) {
         await this.t
-            .typeText(this.fields.phone[personNo - 1], value);
+            .typeText(this.fields.phone[personNo - 1], value, {paste: true});
     }
 
     async verifyPrice(roomtypeNo, valueString) {
         await this.t
             .expect(this.labels.price[roomtypeNo - 1].innerText).eql(valueString + " €*");
+    }
+
+    async setComment(value) {
+        await this.t
+            .typeText(this.fields.comment, value, {paste: true});
+    }
+
+    async submitExpectingValidationError(expectedAlertMessage) {
+        await this.t
+            .expect(this.navs.submitButton.getAttribute('class')).eql('btn btn-default')
+            .setNativeDialogHandler(() => true)
+            .click(this.navs.submitButton);
+
+        const history = await this.t.getNativeDialogHistory();
+        await this.t
+            .expect(history[0].type).eql('alert')
+            .expect(history[0].text).eql(expectedAlertMessage)
+            .expect(this.getLocation()).notContains('reservation-show.html');
     }
 }
 

@@ -43,4 +43,20 @@ export class TestData {
         await fp.verifyPrice(2, "105,00");
         await fp.verifyPrice(3, "19,00");
     }
+
+    static async enterLongComment(fp) {
+        var longComment = "This is a comment. It is not yet very long. But it will be...\n";
+        var extension = "It is getting longer";
+        for (var i = 0; i < 10; i++) {
+            longComment += extension + "\n";
+            extension += ' and longer #$%!=´` äöüÄÖÜß ';
+        }
+        longComment += "(" + longComment.length + " chars before this)";
+        await fp.setComment(longComment);
+    }
+
+    // TODO language specific
+    static expectedAlertMessage(fp) {
+        return "You cannot generate the email yet. Please make sure you fill in all required fields correctly and accept the disclaimer, then try again. Comments are limited to 2000 characters. Invalid fields are marked in red.";
+    }
 }

@@ -18,7 +18,7 @@ Implemented using [testcafe](https://github.com/DevExpress/testcafe) in JavaScri
  - F2: On the form page, the user can enter booking information for a single room and the correct prices are shown
  - F3: On the form page, the user can enter booking information for a double room and the correct prices are shown
  - F4: On the form page, the user can enter booking information for a triple room and the correct prices are shown
- - F5: On the form page, the user can enter a long message in the comments field (try 5000 characters)
+ - F5: On the form page, the user can enter a long message in the comments field (try just below 2000 characters)
  - F6: On the form page, before the disclaimer checkbox is checked, the "Generate Email" button is disabled, 
    and clicking it produces an error message and does not proceed to the email page
  - F7: On the form page, switching language from English to German works 
@@ -34,6 +34,8 @@ Implemented using [testcafe](https://github.com/DevExpress/testcafe) in JavaScri
  - F11 TODO: On the form page, even when double or triple room is selected, their personal information can be left
    blank as long as the info for the first person is provided. An email can be generated that states that
    data for the second or third person is not provided (to avoid booking errors due to misreading by the hotel)
+ - F12 TODO: On the form page, comments are limited to 2000 characters in length, any additional input gets truncated
+   TODO: also show that limit somewhere.
 
 ### Email Page
 
