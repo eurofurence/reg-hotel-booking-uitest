@@ -7,16 +7,14 @@ export class TitlePage {
 
         this.getLocation = ClientFunction(() => document.location.href);
 
-        // Our Buttons and their labels do not have an id yet - TODO give them one
         this.navs = {
-            submitButton: Selector('a[href="reservation-form.html"]'),
-            languageDropdown: Selector('a[class="dropdown-toggle"]'),
-            englishButton: Selector('a[href="../en/index.html"]'),
-            germanButton: Selector('a[href="../de/index.html"]'),
+            submitButton: Selector('#submitbutton'),
+            languageDropdown: Selector('#language_dropdown_toggle'),
+            englishButton: Selector('#language_en'),
+            germanButton: Selector('#language_de'),
         };
-        // Most of our text elements do not have ids yet - TODO give them one
         this.labels = {
-            textHeadline: Selector('#unhide_with_js div h4'),
+            textHeadline: Selector('#text_headline'),
         };
     }
 
@@ -35,12 +33,12 @@ export class TitlePage {
     }
 
     async checkLanguage() {
-        // TODO once the full text has an id, we can compare the whole thing
-        var expectedHeadline = this.language === 'en' ? 'Booking a Hotelroom for Eurofurence' : 'Hotelbuchungsprozedur für Eurofurence';
+        var expectedHeadline = this.language === 'en' ?
+            'Booking a Hotel Room for Eurofurence' :
+            'Hotelbuchung für Eurofurence';
 
         await this.t
             .expect(this.getLocation()).contains('/' + this.language + '/')
-            // automatically selects the first match I think, get second match using .nth(1)
             .expect(this.labels.textHeadline.innerText).contains(expectedHeadline);
     }
 
@@ -63,27 +61,26 @@ export class FormPage {
         this.getLocation = ClientFunction(() => document.location.href);
 
         this.navs = {
-            englishButton: Selector('a[href="../en/reservation-form.html"]'),
-            germanButton: Selector('a[href="../de/reservation-form.html"]'),
+            languageDropdown: Selector('#language_dropdown_toggle'),
+            englishButton: Selector('#language_en'),
+            germanButton: Selector('#language_de'),
             submitButton: Selector('#submitbutton'),
         };
         this.labels = {
-            // TODO this label needs an id
-            // roomsize: Selector('#roomsize_label'),
+            roomsize: Selector('#roomsize_label'),
             roomsizes: [Selector('#size_single_label'), Selector('#size_double_label'), Selector('#size_triple_label')],
-            // it makes no sense to have the labels for column 2 now that column 1 is editable
-            // TODO change this in the app and here
-            name: Selector('label[for="name2"]'),
-            street: Selector('label[for="street2"]'),
-            city: Selector('label[for="city2"]'),
-            country: Selector('label[for="country2"]'),
-            email: Selector('label[for="email2"]'),
-            phone: Selector('label[for="phone2"]'),
+            name: Selector('label[for="name1"]'),
+            street: Selector('label[for="street1"]'),
+            city: Selector('label[for="city1"]'),
+            country: Selector('label[for="country1"]'),
+            email: Selector('label[for="email1"]'),
+            phone: Selector('label[for="phone1"]'),
             dates: Selector('label[for="arrival"]'),
-            // TODO this label really needs an id
-            // roomtype: Selector('#roomtype_label'),
+            roomtype: Selector('#roomtype_label'),
             roomtypes: [Selector('#roomtype1button'), Selector('#roomtype2button'), Selector('#roomtype3button')],
             price: [Selector('#roomtype1price'), Selector('#roomtype2price'), Selector('#roomtype3price')],
+            footnote: Selector('#footnote_label'),
+            disclaimerError: Selector('#understood_error'),
         };
         this.fields = {
             // remember, you need to click the label, not the field, for radio buttons
@@ -193,6 +190,41 @@ export class FormPage {
             .expect(history[0].text).eql(expectedAlertMessage)
             .expect(this.getLocation()).notContains('reservation-show.html');
     }
+
+    async verifyDisclaimerMarkedMissing() {
+        await this.t
+            .expect(this.labels.disclaimerError.getAttribute('class')).contains('has-error');
+    }
+
+    async switchToGerman() {
+        this.language = 'de';
+        await this.t
+            .click(this.navs.languageDropdown)
+            .click(this.navs.germanButton);
+    }
+
+    async switchToEnglish() {
+        this.language = 'en';
+        await this.t
+            .click(this.navs.languageDropdown)
+            .click(this.navs.englishButton);
+    }
+
+    async checkLanguage(expectedArrival, expectedDeparture) {
+        var expected = {
+            'en':{
+                roomsize: 'Room Size',
+            }, 'de':{
+                roomsize: 'Anzahl Personen',
+            }
+        };
+
+        await this.t
+            .expect(this.getLocation()).contains('/' + this.language + '/')
+            .expect(this.labels.roomsize.innerText).eql(expected[this.language].roomsize)
+            .expect(this.fields.arrival.value).eql(expectedArrival)
+            .expect(this.fields.departure.value).eql(expectedDeparture);
+    }
 }
 
 export class EmailPage {
@@ -201,8 +233,9 @@ export class EmailPage {
         this.language = language;
 
         this.navs = {
-            englishButton: Selector('a[href="../en/reservation-show.html"]'),
-            germanButton: Selector('a[href="../de/reservation-show.html"]'),
+            languageDropdown: Selector('#language_dropdown_toggle'),
+            englishButton: Selector('#language_en'),
+            germanButton: Selector('#language_de'),
         };
     }
 }

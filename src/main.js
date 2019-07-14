@@ -1,10 +1,7 @@
 import {TitlePage, FormPage, EmailPage, Pages} from "./page-model";
 import {TestData} from "./data-helper";
 
-// page without en/ redirects to 'en' instead of en, which causes testcafe to fail with 404, because
-// https://fenmar.github.io/ef-hotelbooking/'en' is not found
-// TODO fix the redirect, then remove en/
-var pageUrl = 'https://fenmar.github.io/ef-hotelbooking/en/';
+var pageUrl = 'http://localhost:63342/reg-hotel-booking/';
 
 fixture `Getting Started`
     .page(pageUrl);
@@ -70,10 +67,38 @@ test('F5: form page: can enter a long comment', async t => {
     await TestData.enterLongComment(fp);
 });
 
-test('F6: form page: when disclaimer not accepted, get validation error and cannot generate email', async t => {
+test('F6: form page: accepting disclaimer required to generate email', async t => {
     var fp = await Pages.progressToFormPage(t);
     await TestData.fillFirstPerson(fp);
 
     // TODO customize alert message depending on validation results
     await fp.submitExpectingValidationError(TestData.expectedAlertMessage());
+    await fp.verifyDisclaimerMarkedMissing();
+});
+
+test('F7: form page: switching from English to German works', async t => {
+    var fp = await Pages.progressToFormPage(t);
+    await TestData.fillFirstPerson(fp);
+    // TODO set different dates and adapt check for them
+
+    await fp.switchToGerman();
+    // date does not convert to German format on lang change
+    // TODO fix this
+    await fp.checkLanguage('08/14/2019', '08/18/2019');
+    // TODO check entered info retained
+});
+
+test('F8: form page: switching from German to English works', async t => {
+    var fp = await Pages.progressToFormPage(t);
+    await TestData.fillFirstPerson(fp);
+    // TODO set different dates and adapt check for them
+
+    await fp.switchToGerman();
+    // TODO change date while in German format
+    await fp.setRoomsize(2);
+    await TestData.fillSecondPerson(fp);
+
+    await fp.switchToEnglish();
+    await fp.checkLanguage('08/14/2019', '08/18/2019');
+    // TODO check entered info retained
 });
