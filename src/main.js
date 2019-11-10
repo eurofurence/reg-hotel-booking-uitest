@@ -71,36 +71,39 @@ test('F6: form page: accepting disclaimer required to generate email', async t =
     const fp = await Pages.progressToFormPage(t);
     await TestData.fillFirstPerson(fp);
 
-    // TODO customize alert message depending on validation results
-    await fp.submitExpectingValidationError(TestData.expectedAlertMessage());
+    await fp.submitExpectingValidationError(TestData.expectedAlertMessage(fp));
     await fp.verifyDisclaimerMarkedMissing();
 });
 
 test('F7: form page: switching from English to German works', async t => {
     const fp = await Pages.progressToFormPage(t);
     await TestData.fillFirstPerson(fp);
-    // TODO set different dates and adapt check for them
+    await TestData.setDates(fp);
+    await fp.checkLanguage(TestData.expectedArrival(fp), TestData.expectedDeparture(fp));
 
     await fp.switchToGerman();
-    // date does not convert to German format on lang change
-    // TODO fix this
-    await fp.checkLanguage('08/14/2019', '08/18/2019');
-    // TODO check entered info retained
+    await fp.checkLanguage(TestData.expectedArrival(fp), TestData.expectedDeparture(fp));
+    // check that data has been retained through language switch
+    await TestData.verifyFirstPerson(fp);
 });
 
 test('F8: form page: switching from German to English works', async t => {
     const fp = await Pages.progressToFormPage(t);
     await TestData.fillFirstPerson(fp);
-    // TODO set different dates and adapt check for them
+    await fp.checkLanguage(TestData.defaultArrival(fp), TestData.defaultDeparture(fp));
 
     await fp.switchToGerman();
-    // TODO change date while in German format
+    // now change date while in German format
+    await TestData.setDates(fp);
     await fp.setRoomsize(2);
     await TestData.fillSecondPerson(fp);
+    await fp.checkLanguage(TestData.expectedArrival(fp), TestData.expectedDeparture(fp));
 
     await fp.switchToEnglish();
-    await fp.checkLanguage('08/14/2019', '08/18/2019');
-    // TODO check entered info retained
+    await fp.checkLanguage(TestData.expectedArrival(fp), TestData.expectedDeparture(fp));
+    // check that data has been retained through language switch back
+    await TestData.verifyFirstPerson(fp);
+    await TestData.verifySecondPerson(fp);
 });
 
 test('F9: form page: filling all required fields makes email generation available', async t => {

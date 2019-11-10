@@ -168,6 +168,32 @@ export class FormPage {
             .typeText(this.fields.phone[personNo - 1], value, {paste: true});
     }
 
+    async verifyName(personNo, expectedValue) {
+        await this.t
+            .expect(this.fields.name[personNo - 1].value).eql(expectedValue);
+    }
+
+    async verifyEmail(personNo, expectedValue) {
+        await this.t
+            .expect(this.fields.email[personNo - 1].value).eql(expectedValue);
+    }
+
+    async setArrival(value) {
+        await this.t
+            .click(this.fields.arrival)
+            .pressKey('ctrl+a delete')
+            .typeText(this.fields.arrival, value)
+            .click(this.fields.departure);
+    }
+
+    async setDeparture(value) {
+        await this.t
+            .click(this.fields.departure)
+            .pressKey('ctrl+a delete')
+            .typeText(this.fields.departure, value)
+            .click(this.fields.arrival);
+    }
+
     async verifyPrice(roomtypeNo, valueString) {
         await this.t
             .expect(this.labels.price[roomtypeNo - 1].innerText).eql("(" + valueString + " €*)");
