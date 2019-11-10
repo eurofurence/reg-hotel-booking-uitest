@@ -164,3 +164,55 @@ test('E2: email page: after secret is revealed', async t => {
 
     // TODO implement more checks (secret shown, To: visible)
 });
+
+test('E3: email page: German, single, 1st', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.switchToGerman();
+    await TestData.fillFirstPerson(fp);
+    await fp.setRoomType(1);
+    await fp.acceptDisclaimer();
+    await fp.submit();
+
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
+    const ep = fp.toEmailPage();
+
+    // TODO implement checks: mail text
+});
+
+test('E4: email page: German, double, 2nd, p2 no info', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.switchToGerman();
+    await fp.setAutomatedTestOverride();
+    await fp.setRoomsize(2);
+    await TestData.fillFirstPerson(fp);
+    await fp.setRoomType(2);
+    await fp.acceptDisclaimer();
+    await fp.submit();
+
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
+    const ep = fp.toEmailPage();
+
+    // TODO implement checks: mail text, To:
+});
+
+test('E5: email page: German, triple, 3rd', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.switchToGerman();
+    await fp.setRoomsize(3);
+    await TestData.fillFirstPerson(fp);
+    await TestData.fillSecondPerson(fp);
+    await TestData.fillThirdPerson(fp);
+    await fp.setRoomType(3);
+    await fp.acceptDisclaimer();
+    await fp.submit();
+
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
+    const ep = fp.toEmailPage();
+
+    // TODO implement checks: mail text
+});
+
+// TODO E6 = E3 in English (leave out switchToGerman call)
+// TODO E7 = E4 in English (leave out switchToGerman call)
+// TODO E8 = E5 in English (leave out switchToGerman call)
+

@@ -108,6 +108,11 @@ export class FormPage {
             .click(this.labels.roomsizes[sizeNo - 1]);
     }
 
+    async setRoomType(typeNo) {
+        await this.t
+            .click(this.labels.roomtypes[typeNo - 1]);
+    }
+
     async _verifyInputDisabledState(selector, isDisabled) {
         if (isDisabled) {
             await this.t.expect(selector.hasAttribute('disabled')).ok();
