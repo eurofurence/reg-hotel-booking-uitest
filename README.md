@@ -2,6 +2,33 @@
 
 Implemented using [testcafe](https://github.com/DevExpress/testcafe) in JavaScript (ECMAScript6 to be precise).
 
+## Installation
+
+All you need besides a clone of this repository is testcafe. Once [node.js](https://nodejs.org/en/download/) 
+(and thus npm) is installed and in your path, run
+
+```
+npm install -g testcafe
+```
+
+## Running the Tests
+
+### Command Line 
+
+You should simply be able to run a command like ```testcafe firefox src/``` while inside this project.  
+
+### JetBrains WebStorm (Windows)
+
+Configure a node.js runtime configuration with 
+
+Node Interpreter: ~\AppData\Roaming\npm\testcafe.cmd
+
+Node Parameters: firefox (or chrome...)
+
+Working Directory: <project directory root>
+
+JavaScript file: src/main.js
+
 ## Test Cases To Be Automated
 
 ### Title Page

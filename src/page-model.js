@@ -170,7 +170,7 @@ export class FormPage {
 
     async verifyPrice(roomtypeNo, valueString) {
         await this.t
-            .expect(this.labels.price[roomtypeNo - 1].innerText).eql(valueString + " €*");
+            .expect(this.labels.price[roomtypeNo - 1].innerText).eql("(" + valueString + " €*)");
     }
 
     async setComment(value) {

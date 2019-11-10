@@ -3,4 +3,5 @@
 *.iws
 videos
 **/devel.js
+.idea/**
 
