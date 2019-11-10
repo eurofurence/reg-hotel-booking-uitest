@@ -54,10 +54,13 @@ export class TestData {
         await fp.verifyPrice(3, "19,00");
     }
 
-    static async enterLongComment(fp) {
+    static async enterLongComment(fp, counter) {
+        if (!counter) {
+            counter = 10; // just barely does not exceed 2000 characters
+        }
         var longComment = "This is a comment. It is not yet very long. But it will be...\n";
         var extension = "It is getting longer";
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < counter; i++) {
             longComment += extension + "\n";
             extension += ' and longer #$%!=´` äöüÄÖÜß ';
         }

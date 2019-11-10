@@ -222,6 +222,38 @@ export class FormPage {
             .expect(this.labels.disclaimerError.getAttribute('class')).contains('has-error');
     }
 
+    async verifyPersonFieldsHaveError(personNo) {
+        var errorColor = 'rgb(255';
+        await this.t
+            .expect(this.fields.name[personNo - 1].getStyleProperty('border-bottom-color')).contains(errorColor)
+            .expect(this.fields.street[personNo - 1].getStyleProperty('border-bottom-color')).contains(errorColor)
+            .expect(this.fields.city[personNo - 1].getStyleProperty('border-bottom-color')).contains(errorColor)
+            .expect(this.fields.country[personNo - 1].getStyleProperty('border-bottom-color')).contains(errorColor)
+            .expect(this.fields.email[personNo - 1].getStyleProperty('border-bottom-color')).contains(errorColor);
+    }
+
+    async verifyPersonFieldsHaveNoError(personNo) {
+        var errorColor = 'rgb(255';
+        await this.t
+            .expect(this.fields.name[personNo - 1].getStyleProperty('border-bottom-color')).notContains(errorColor)
+            .expect(this.fields.street[personNo - 1].getStyleProperty('border-bottom-color')).notContains(errorColor)
+            .expect(this.fields.city[personNo - 1].getStyleProperty('border-bottom-color')).notContains(errorColor)
+            .expect(this.fields.country[personNo - 1].getStyleProperty('border-bottom-color')).notContains(errorColor)
+            .expect(this.fields.email[personNo - 1].getStyleProperty('border-bottom-color')).notContains(errorColor);
+    }
+
+    async verifyCommentHasError() {
+        var errorColor = 'rgb(255';
+        await this.t
+            .expect(this.fields.comment.getStyleProperty('border-bottom-color')).contains(errorColor);
+    }
+
+    async verifyCommentHasNoError() {
+        var errorColor = 'rgb(255';
+        await this.t
+            .expect(this.fields.comment.getStyleProperty('border-bottom-color')).notContains(errorColor);
+    }
+
     async switchToGerman() {
         this.language = 'de';
         await this.t

@@ -113,11 +113,31 @@ test('F9: form page: filling all required fields makes email generation availabl
     await fp.submit();
 });
 
-// TODO F10 implement functionality first
+test('F10: form page: 1st person fields mandatory', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.verifyPersonFieldsHaveError(1);
+});
 
-// TODO F11 implement functionality first
+test('F11: form page: 2nd, 3rd person fields optional', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.setRoomsize(3);
+    await TestData.fillFirstPerson(fp);
 
-// TODO F12 implement functionality first
+    await fp.verifyPersonFieldsHaveNoError(1);
+    await fp.verifyPersonFieldsHaveNoError(2);
+    await fp.verifyPersonFieldsHaveNoError(3);
+});
+
+test('F12: form page: comment length limit', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await TestData.enterLongComment(fp);
+    await fp.verifyCommentHasNoError();
+
+    await TestData.enterLongComment(fp, 20);
+    await fp.verifyCommentHasError();
+});
+
+// TODO implement test cases E1 - E14
 
 test('E1: email page: before secret is revealed', async t => {
     const fp = await Pages.progressToFormPage(t);
