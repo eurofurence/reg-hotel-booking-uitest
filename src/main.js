@@ -137,7 +137,7 @@ test('F12: form page: comment length limit', async t => {
     await fp.verifyCommentHasError();
 });
 
-// TODO implement test cases E1 - E14
+// TODO implement test cases E1 - E14 (partially done)
 
 test('E1: email page: before secret is revealed', async t => {
     const fp = await Pages.progressToFormPage(t);
@@ -145,6 +145,22 @@ test('E1: email page: before secret is revealed', async t => {
     await fp.acceptDisclaimer();
     await fp.submit();
 
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
     const ep = fp.toEmailPage();
-    // TODO implement checks once logic is implemented
+    await ep.verifyNotReady();
+
+    // TODO implement more checks (secret NOT shown, To: hidden)
+});
+
+test('E2: email page: after secret is revealed', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.setAutomatedTestOverride();
+    await TestData.fillFirstPerson(fp);
+    await fp.acceptDisclaimer();
+    await fp.submit();
+
+    const ep = fp.toEmailPage();
+    await ep.verifyReady();
+
+    // TODO implement more checks (secret shown, To: visible)
 });

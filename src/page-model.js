@@ -59,6 +59,9 @@ export class FormPage {
         this.language = language;
 
         this.getLocation = ClientFunction(() => document.location.href);
+        this.setOverride = ClientFunction(() => {
+            document.querySelector('#automated_test_config').value = 'showDemosecret';
+        });
 
         this.navs = {
             languageDropdown: Selector('#language_dropdown_toggle'),
@@ -302,6 +305,10 @@ export class FormPage {
             .expect(this.getLocation()).contains('/' + this.language + '/reservation-show.html');
     }
 
+    async setAutomatedTestOverride() {
+        await this.setOverride();
+    }
+
     toEmailPage() {
         return new EmailPage(this.t, this.language);
     }
@@ -316,7 +323,21 @@ export class EmailPage {
             languageDropdown: Selector('#language_dropdown_toggle'),
             englishButton: Selector('#language_en'),
             germanButton: Selector('#language_de'),
+            notReadyButton: Selector('#not-ready'),
+            readyLink: Selector('#ready-text-start'),
         };
+    }
+
+    async verifyReady() {
+        await this.t
+            .expect(this.navs.readyLink.visible).ok()
+            .expect(this.navs.notReadyButton.exists).notOk();
+    }
+
+    async verifyNotReady() {
+        await this.t
+            .expect(this.navs.notReadyButton.visible).ok()
+            .expect(this.navs.readyLink.visible).notOk();
     }
 }
 
