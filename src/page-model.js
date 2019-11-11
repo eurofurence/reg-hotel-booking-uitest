@@ -59,6 +59,9 @@ export class FormPage {
         this.language = language;
 
         this.getLocation = ClientFunction(() => document.location.href);
+        this.setOverride = ClientFunction(() => {
+            document.querySelector('#automated_test_config').value = 'showDemosecret';
+        });
 
         this.navs = {
             languageDropdown: Selector('#language_dropdown_toggle'),
@@ -103,6 +106,11 @@ export class FormPage {
     async setRoomsize(sizeNo) {
         await this.t
             .click(this.labels.roomsizes[sizeNo - 1]);
+    }
+
+    async setRoomType(typeNo) {
+        await this.t
+            .click(this.labels.roomtypes[typeNo - 1]);
     }
 
     async _verifyInputDisabledState(selector, isDisabled) {
@@ -168,9 +176,35 @@ export class FormPage {
             .typeText(this.fields.phone[personNo - 1], value, {paste: true});
     }
 
+    async verifyName(personNo, expectedValue) {
+        await this.t
+            .expect(this.fields.name[personNo - 1].value).eql(expectedValue);
+    }
+
+    async verifyEmail(personNo, expectedValue) {
+        await this.t
+            .expect(this.fields.email[personNo - 1].value).eql(expectedValue);
+    }
+
+    async setArrival(value) {
+        await this.t
+            .click(this.fields.arrival)
+            .pressKey('ctrl+a delete')
+            .typeText(this.fields.arrival, value)
+            .click(this.fields.departure);
+    }
+
+    async setDeparture(value) {
+        await this.t
+            .click(this.fields.departure)
+            .pressKey('ctrl+a delete')
+            .typeText(this.fields.departure, value)
+            .click(this.fields.arrival);
+    }
+
     async verifyPrice(roomtypeNo, valueString) {
         await this.t
-            .expect(this.labels.price[roomtypeNo - 1].innerText).eql(valueString + " €*");
+            .expect(this.labels.price[roomtypeNo - 1].innerText).eql("(" + valueString + " €*)");
     }
 
     async setComment(value) {
@@ -194,6 +228,38 @@ export class FormPage {
     async verifyDisclaimerMarkedMissing() {
         await this.t
             .expect(this.labels.disclaimerError.getAttribute('class')).contains('has-error');
+    }
+
+    async verifyPersonFieldsHaveError(personNo) {
+        var errorColor = 'rgb(255';
+        await this.t
+            .expect(this.fields.name[personNo - 1].getStyleProperty('border-bottom-color')).contains(errorColor)
+            .expect(this.fields.street[personNo - 1].getStyleProperty('border-bottom-color')).contains(errorColor)
+            .expect(this.fields.city[personNo - 1].getStyleProperty('border-bottom-color')).contains(errorColor)
+            .expect(this.fields.country[personNo - 1].getStyleProperty('border-bottom-color')).contains(errorColor)
+            .expect(this.fields.email[personNo - 1].getStyleProperty('border-bottom-color')).contains(errorColor);
+    }
+
+    async verifyPersonFieldsHaveNoError(personNo) {
+        var errorColor = 'rgb(255';
+        await this.t
+            .expect(this.fields.name[personNo - 1].getStyleProperty('border-bottom-color')).notContains(errorColor)
+            .expect(this.fields.street[personNo - 1].getStyleProperty('border-bottom-color')).notContains(errorColor)
+            .expect(this.fields.city[personNo - 1].getStyleProperty('border-bottom-color')).notContains(errorColor)
+            .expect(this.fields.country[personNo - 1].getStyleProperty('border-bottom-color')).notContains(errorColor)
+            .expect(this.fields.email[personNo - 1].getStyleProperty('border-bottom-color')).notContains(errorColor);
+    }
+
+    async verifyCommentHasError() {
+        var errorColor = 'rgb(255';
+        await this.t
+            .expect(this.fields.comment.getStyleProperty('border-bottom-color')).contains(errorColor);
+    }
+
+    async verifyCommentHasNoError() {
+        var errorColor = 'rgb(255';
+        await this.t
+            .expect(this.fields.comment.getStyleProperty('border-bottom-color')).notContains(errorColor);
     }
 
     async switchToGerman() {
@@ -244,6 +310,10 @@ export class FormPage {
             .expect(this.getLocation()).contains('/' + this.language + '/reservation-show.html');
     }
 
+    async setAutomatedTestOverride() {
+        await this.setOverride();
+    }
+
     toEmailPage() {
         return new EmailPage(this.t, this.language);
     }
@@ -258,7 +328,21 @@ export class EmailPage {
             languageDropdown: Selector('#language_dropdown_toggle'),
             englishButton: Selector('#language_en'),
             germanButton: Selector('#language_de'),
+            notReadyButton: Selector('#not-ready'),
+            readyLink: Selector('#ready-text-start'),
         };
+    }
+
+    async verifyReady() {
+        await this.t
+            .expect(this.navs.readyLink.visible).ok()
+            .expect(this.navs.notReadyButton.exists).notOk();
+    }
+
+    async verifyNotReady() {
+        await this.t
+            .expect(this.navs.notReadyButton.visible).ok()
+            .expect(this.navs.readyLink.visible).notOk();
     }
 }
 

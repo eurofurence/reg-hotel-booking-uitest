@@ -71,36 +71,39 @@ test('F6: form page: accepting disclaimer required to generate email', async t =
     const fp = await Pages.progressToFormPage(t);
     await TestData.fillFirstPerson(fp);
 
-    // TODO customize alert message depending on validation results
-    await fp.submitExpectingValidationError(TestData.expectedAlertMessage());
+    await fp.submitExpectingValidationError(TestData.expectedAlertMessage(fp));
     await fp.verifyDisclaimerMarkedMissing();
 });
 
 test('F7: form page: switching from English to German works', async t => {
     const fp = await Pages.progressToFormPage(t);
     await TestData.fillFirstPerson(fp);
-    // TODO set different dates and adapt check for them
+    await TestData.setDates(fp);
+    await fp.checkLanguage(TestData.expectedArrival(fp), TestData.expectedDeparture(fp));
 
     await fp.switchToGerman();
-    // date does not convert to German format on lang change
-    // TODO fix this
-    await fp.checkLanguage('08/14/2019', '08/18/2019');
-    // TODO check entered info retained
+    await fp.checkLanguage(TestData.expectedArrival(fp), TestData.expectedDeparture(fp));
+    // check that data has been retained through language switch
+    await TestData.verifyFirstPerson(fp);
 });
 
 test('F8: form page: switching from German to English works', async t => {
     const fp = await Pages.progressToFormPage(t);
     await TestData.fillFirstPerson(fp);
-    // TODO set different dates and adapt check for them
+    await fp.checkLanguage(TestData.defaultArrival(fp), TestData.defaultDeparture(fp));
 
     await fp.switchToGerman();
-    // TODO change date while in German format
+    // now change date while in German format
+    await TestData.setDates(fp);
     await fp.setRoomsize(2);
     await TestData.fillSecondPerson(fp);
+    await fp.checkLanguage(TestData.expectedArrival(fp), TestData.expectedDeparture(fp));
 
     await fp.switchToEnglish();
-    await fp.checkLanguage('08/14/2019', '08/18/2019');
-    // TODO check entered info retained
+    await fp.checkLanguage(TestData.expectedArrival(fp), TestData.expectedDeparture(fp));
+    // check that data has been retained through language switch back
+    await TestData.verifyFirstPerson(fp);
+    await TestData.verifySecondPerson(fp);
 });
 
 test('F9: form page: filling all required fields makes email generation available', async t => {
@@ -110,11 +113,31 @@ test('F9: form page: filling all required fields makes email generation availabl
     await fp.submit();
 });
 
-// TODO F10 implement functionality first
+test('F10: form page: 1st person fields mandatory', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.verifyPersonFieldsHaveError(1);
+});
 
-// TODO F11 implement functionality first
+test('F11: form page: 2nd, 3rd person fields optional', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.setRoomsize(3);
+    await TestData.fillFirstPerson(fp);
 
-// TODO F12 implement functionality first
+    await fp.verifyPersonFieldsHaveNoError(1);
+    await fp.verifyPersonFieldsHaveNoError(2);
+    await fp.verifyPersonFieldsHaveNoError(3);
+});
+
+test('F12: form page: comment length limit', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await TestData.enterLongComment(fp);
+    await fp.verifyCommentHasNoError();
+
+    await TestData.enterLongComment(fp, 20);
+    await fp.verifyCommentHasError();
+});
+
+// TODO implement test cases E1 - E14 (partially done)
 
 test('E1: email page: before secret is revealed', async t => {
     const fp = await Pages.progressToFormPage(t);
@@ -122,6 +145,74 @@ test('E1: email page: before secret is revealed', async t => {
     await fp.acceptDisclaimer();
     await fp.submit();
 
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
     const ep = fp.toEmailPage();
-    // TODO implement checks once logic is implemented
+    await ep.verifyNotReady();
+
+    // TODO implement more checks (secret NOT shown, To: hidden)
 });
+
+test('E2: email page: after secret is revealed', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.setAutomatedTestOverride();
+    await TestData.fillFirstPerson(fp);
+    await fp.acceptDisclaimer();
+    await fp.submit();
+
+    const ep = fp.toEmailPage();
+    await ep.verifyReady();
+
+    // TODO implement more checks (secret shown, To: visible)
+});
+
+test('E3: email page: German, single, 1st', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.switchToGerman();
+    await TestData.fillFirstPerson(fp);
+    await fp.setRoomType(1);
+    await fp.acceptDisclaimer();
+    await fp.submit();
+
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
+    const ep = fp.toEmailPage();
+
+    // TODO implement checks: mail text
+});
+
+test('E4: email page: German, double, 2nd, p2 no info', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.switchToGerman();
+    await fp.setAutomatedTestOverride();
+    await fp.setRoomsize(2);
+    await TestData.fillFirstPerson(fp);
+    await fp.setRoomType(2);
+    await fp.acceptDisclaimer();
+    await fp.submit();
+
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
+    const ep = fp.toEmailPage();
+
+    // TODO implement checks: mail text, To:
+});
+
+test('E5: email page: German, triple, 3rd', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.switchToGerman();
+    await fp.setRoomsize(3);
+    await TestData.fillFirstPerson(fp);
+    await TestData.fillSecondPerson(fp);
+    await TestData.fillThirdPerson(fp);
+    await fp.setRoomType(3);
+    await fp.acceptDisclaimer();
+    await fp.submit();
+
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
+    const ep = fp.toEmailPage();
+
+    // TODO implement checks: mail text
+});
+
+// TODO E6 = E3 in English (leave out switchToGerman call)
+// TODO E7 = E4 in English (leave out switchToGerman call)
+// TODO E8 = E5 in English (leave out switchToGerman call)
+

@@ -2,6 +2,33 @@
 
 Implemented using [testcafe](https://github.com/DevExpress/testcafe) in JavaScript (ECMAScript6 to be precise).
 
+## Installation
+
+All you need besides a clone of this repository is testcafe. Once [node.js](https://nodejs.org/en/download/) 
+(and thus npm) is installed and in your path, run
+
+```
+npm install -g testcafe
+```
+
+## Running the Tests
+
+### Command Line 
+
+You should simply be able to run a command like ```testcafe firefox src/``` while inside this project.  
+
+### JetBrains WebStorm (Windows)
+
+Configure a node.js runtime configuration with 
+
+Node Interpreter: ~\AppData\Roaming\npm\testcafe.cmd
+
+Node Parameters: firefox (or chrome...)
+
+Working Directory: <project directory root>
+
+JavaScript file: src/main.js
+
 ## Test Cases To Be Automated
 
 ### Title Page
@@ -26,16 +53,16 @@ Implemented using [testcafe](https://github.com/DevExpress/testcafe) in JavaScri
  - F8: On the form page, switching language from German to English works
    (field values and captions show correctly, and all entered information is retained, including date with format change)
  - F9: On the form page, after the disclaimer checkbox is checked, the submit button becomes available and it works
- - F10 TODO: On the form page, these fields are mandatory for the first person:
+ - F10 On the form page, these fields are mandatory for the first person:
    Name (min 3 characters), Street Address (min 3 characters), City and ZIP (min 3 characters), 
    Country (min 3 characters), Email address (no spaces, must contain an @), Phone Number (min 3 characters).
    If any of them is not set initially or cleared, the Generate Email button stays/becomes unavailable and the fields 
    are somehow marked as "this field causes an error".
- - F11 TODO: On the form page, even when double or triple room is selected, their personal information can be left
+ - F11 On the form page, even when double or triple room is selected, their personal information can be left
    blank as long as the info for the first person is provided. An email can be generated that states that
    data for the second or third person is not provided (to avoid booking errors due to misreading by the hotel)
- - F12 TODO: On the form page, comments are limited to 2000 characters in length, any additional input gets truncated
-   TODO: also show that limit somewhere.
+ - F12 On the form page, comments are limited to 2000 characters in length, any additional input causes a validation
+   error.
 
 ### Email Page
 

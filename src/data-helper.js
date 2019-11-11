@@ -26,6 +26,16 @@ export class TestData {
         await fp.setPhone(3, '+40 126721 231683 21678 326 632 621 362763836216328126386');
     }
 
+    static async verifyFirstPerson(fp) {
+        await fp.verifyName(1, 'John Tester1');
+        await fp.verifyEmail(1, 'uitester1@mailinator.com');
+    }
+
+    static async verifySecondPerson(fp) {
+        await fp.verifyName(2, 'Paula Tester2');
+        await fp.verifyEmail(2, 'uitester2@mailinator.com');
+    }
+
     static async verifySingleRoomPrices(fp) {
         await fp.verifyPrice(1, "84,00");
         await fp.verifyPrice(2, "85,00");
@@ -44,10 +54,13 @@ export class TestData {
         await fp.verifyPrice(3, "19,00");
     }
 
-    static async enterLongComment(fp) {
+    static async enterLongComment(fp, counter) {
+        if (!counter) {
+            counter = 10; // just barely does not exceed 2000 characters
+        }
         var longComment = "This is a comment. It is not yet very long. But it will be...\n";
         var extension = "It is getting longer";
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < counter; i++) {
             longComment += extension + "\n";
             extension += ' and longer #$%!=´` äöüÄÖÜß ';
         }
@@ -55,8 +68,50 @@ export class TestData {
         await fp.setComment(longComment);
     }
 
-    // TODO language specific
+    static async setDates(fp) {
+        var arrival = TestData.expectedArrival(fp);
+        var departure = TestData.expectedDeparture(fp);
+        await fp.setArrival(arrival);
+        await fp.setDeparture(departure);
+    }
+
     static expectedAlertMessage(fp) {
-        return "You cannot generate the email yet. Please make sure you fill in all required fields correctly and accept the disclaimer, then try again. Comments are limited to 2000 characters. Invalid fields are marked in red.";
+        if (fp.language === "de") {
+            return "Du kannst die Email noch nicht generieren. Bitte fülle alle Pflichtfelder korrekt aus und setze den Haken bei &#39;Bestätigung&#39;, danach sollte es gehen. Dein Kommentar darf maximal 2000 Zeichen lang sein. Felder mit Validierungsfehlern sind rot markiert."
+        } else {
+            return "You cannot generate the email yet. Please make sure you fill in all required fields correctly and accept the disclaimer, then try again. Comments are limited to 2000 characters. Invalid fields are marked in red.";
+        }
+    }
+
+    static expectedArrival(fp) {
+        if (fp.language === "de") {
+            return "15.08.2019";
+        } else {
+            return "08/15/2019";
+        }
+    }
+
+    static expectedDeparture(fp) {
+        if (fp.language === "de") {
+            return "17.08.2019";
+        } else {
+            return "08/17/2019";
+        }
+    }
+
+    static defaultArrival(fp) {
+        if (fp.language === "de") {
+            return "14.08.2019";
+        } else {
+            return "08/14/2019";
+        }
+    }
+
+    static defaultDeparture(fp) {
+        if (fp.language === "de") {
+            return "18.08.2019";
+        } else {
+            return "08/18/2019";
+        }
     }
 }
