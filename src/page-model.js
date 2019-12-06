@@ -80,8 +80,8 @@ export class FormPage {
             phone: Selector('label[for="phone1"]'),
             dates: Selector('label[for="arrival"]'),
             roomtype: Selector('#roomtype_label'),
-            roomtypes: [Selector('#roomtype1button'), Selector('#roomtype2button'), Selector('#roomtype3button')],
-            price: [Selector('#roomtype1price'), Selector('#roomtype2price'), Selector('#roomtype3price')],
+            roomtypes: [Selector('#roomtype1button'), Selector('#roomtype2button'), Selector('#roomtype3button'), Selector('#roomtype4button')],
+            price: [Selector('#roomtype1price'), Selector('#roomtype2price'), Selector('#roomtype3price'), Selector('#roomtype4price')],
             footnote: Selector('#footnote_label'),
             disclaimerError: Selector('#understood_error'),
         };
@@ -97,7 +97,7 @@ export class FormPage {
             arrival: Selector('#arrival'),
             departure: Selector('#departure'),
             // remember, you need to click the label, not the field, for radio buttons
-            roomtypes: [Selector('#roomtype1'), Selector('#roomtype2'), Selector('#roomtype3')],
+            roomtypes: [Selector('#roomtype1'), Selector('#roomtype2'), Selector('#roomtype3'), Selector('#roomtype4')],
             comment: Selector('#comments'),
             disclaimer: Selector('#understood'),
         };
@@ -138,12 +138,13 @@ export class FormPage {
             .expect(this.fields.roomsizes[0].checked).eql(true)
             .expect(this.fields.roomsizes[1].checked).eql(false)
             .expect(this.fields.roomsizes[2].checked).eql(false)
-            .expect(this.fields.arrival.value).eql('08/14/2019')
-            .expect(this.fields.departure.value).eql('08/18/2019')
+            .expect(this.fields.arrival.value).eql('08/19/2020')
+            .expect(this.fields.departure.value).eql('08/23/2020')
             .expect(this.fields.roomtypes[0].checked).eql(true)
             .expect(this.fields.roomtypes[1].checked).eql(false)
             .expect(this.fields.roomtypes[2].checked).eql(false)
-            .expect(this.fields.disclaimer.checked).notOk()
+            .expect(this.fields.roomtypes[3].checked).eql(false)
+            .expect(this.fields.disclaimer.checked).notOk();
     }
 
     async setName(personNo, value) {

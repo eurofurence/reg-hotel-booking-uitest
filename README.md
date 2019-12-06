@@ -20,6 +20,9 @@ Alternatively, this repository includes a package.json, so opening the project i
 
 ## Running the Tests
 
+Note: if you have changed the configuration for the hotel booking app (config.json), you will have to adapt
+some dates and prices in these tests as well.
+
 ### Command Line 
 
 You should simply be able to run a command like ```testcafe firefox src/main.js``` while inside this project.

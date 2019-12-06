@@ -37,21 +37,24 @@ export class TestData {
     }
 
     static async verifySingleRoomPrices(fp) {
-        await fp.verifyPrice(1, "84,00");
-        await fp.verifyPrice(2, "85,00");
-        await fp.verifyPrice(3, "14,00");
+        await fp.verifyPrice(1, "90,00");
+        await fp.verifyPrice(2, "105,00");
+        await fp.verifyPrice(3, "153,00");
+        await fp.verifyPrice(4, "173,00");
     }
 
     static async verifyDoubleRoomPrices(fp) {
-        await fp.verifyPrice(1, "99,00");
-        await fp.verifyPrice(2, "100,00");
-        await fp.verifyPrice(3, "15,00");
+        await fp.verifyPrice(1, "120,00");
+        await fp.verifyPrice(2, "140,00");
+        await fp.verifyPrice(3, "178,00");
+        await fp.verifyPrice(4, "208,00");
     }
 
     static async verifyTripleRoomPrices(fp) {
-        await fp.verifyPrice(1, "104,00");
-        await fp.verifyPrice(2, "105,00");
-        await fp.verifyPrice(3, "19,00");
+        await fp.verifyPrice(1, "195,00");
+        await fp.verifyPrice(2, "210,00");
+        await fp.verifyPrice(3, "240,00");
+        await fp.verifyPrice(4, "270,00");
     }
 
     static async enterLongComment(fp, counter) {
@@ -85,33 +88,33 @@ export class TestData {
 
     static expectedArrival(fp) {
         if (fp.language === "de") {
-            return "15.08.2019";
+            return "16.08.2020";
         } else {
-            return "08/15/2019";
+            return "08/16/2020";
         }
     }
 
     static expectedDeparture(fp) {
         if (fp.language === "de") {
-            return "17.08.2019";
+            return "24.08.2020";
         } else {
-            return "08/17/2019";
+            return "08/24/2020";
         }
     }
 
     static defaultArrival(fp) {
         if (fp.language === "de") {
-            return "14.08.2019";
+            return "19.08.2020";
         } else {
-            return "08/14/2019";
+            return "08/19/2020";
         }
     }
 
     static defaultDeparture(fp) {
         if (fp.language === "de") {
-            return "18.08.2019";
+            return "23.08.2020";
         } else {
-            return "08/18/2019";
+            return "08/23/2020";
         }
     }
 }
