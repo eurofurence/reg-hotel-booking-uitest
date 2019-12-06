@@ -4,6 +4,8 @@ Implemented using [testcafe](https://github.com/DevExpress/testcafe) in JavaScri
 
 ## Installation
 
+### Command Line 
+
 All you need besides a clone of this repository is testcafe. Once [node.js](https://nodejs.org/en/download/) 
 (and thus npm) is installed and in your path, run
 
@@ -11,23 +13,28 @@ All you need besides a clone of this repository is testcafe. Once [node.js](http
 npm install -g testcafe
 ```
 
+### JetBrains WebStorm
+
+Alternatively, this repository includes a package.json, so opening the project in WebStorm should download its dependencies to
+`node_modules`. In particular, it will download a version of testcafe to `node_modules/testcafe`
+
 ## Running the Tests
 
 ### Command Line 
 
-You should simply be able to run a command like ```testcafe firefox src/``` while inside this project.  
+You should simply be able to run a command like ```testcafe firefox src/main.js``` while inside this project.
 
-### JetBrains WebStorm (Windows)
+### JetBrains WebStorm
 
 Configure a node.js runtime configuration with 
 
-Node Interpreter: ~\AppData\Roaming\npm\testcafe.cmd
-
-Node Parameters: firefox (or chrome...)
-
-Working Directory: <project directory root>
-
-JavaScript file: src/main.js
+<table>
+  <tr><td>Node Interpreter:</td><td>(Project node, or some other node installation with a current version)</td></tr>
+  <tr><td>Node Parameters:</td><td></td></tr>
+  <tr><td>Working Directory:</td><td>(project directory root)</td></tr>
+  <tr><td>JavaScript file:</td><td>node_modules/testcafe/bin/testcafe.js</td></tr>
+  <tr><td>Application parameters:</td><td>firefox src/main.js</td></tr>
+</table>
 
 ## Test Cases To Be Automated
 
