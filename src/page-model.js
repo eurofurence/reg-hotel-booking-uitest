@@ -22,14 +22,16 @@ export class TitlePage {
         this.language = 'de';
         await this.t
             .click(this.navs.languageDropdown)
-            .click(this.navs.germanButton);
+            .click(this.navs.germanButton)
+            .wait(50); // give page time to rebuild
     }
 
     async switchToEnglish() {
         this.language = 'en';
         await this.t
             .click(this.navs.languageDropdown)
-            .click(this.navs.englishButton);
+            .click(this.navs.englishButton)
+            .wait(50); // give page time to rebuild
     }
 
     async checkLanguage() {
@@ -332,18 +334,48 @@ export class EmailPage {
             notReadyButton: Selector('#not-ready'),
             readyLink: Selector('#ready-text-start'),
         };
+        this.labels = {
+            timeError: Selector('#timeError'),
+            timer: Selector('#secret-timer'),
+        };
+        this.fields = {
+            emailTo: Selector('#email_to'),
+            emailSubject: Selector('#email_subject'),
+            email: Selector('#email'),
+        };
     }
 
     async verifyReady() {
         await this.t
             .expect(this.navs.readyLink.visible).ok()
-            .expect(this.navs.notReadyButton.exists).notOk();
+            .expect(this.navs.notReadyButton.exists).notOk()
+            .expect(this.labels.timer.exists).notOk()
+            .expect(this.fields.emailTo.visible).ok();
     }
 
     async verifyNotReady() {
         await this.t
             .expect(this.navs.notReadyButton.visible).ok()
-            .expect(this.navs.readyLink.visible).notOk();
+            .expect(this.navs.readyLink.visible).notOk()
+            .expect(this.labels.timeError.visible).notOk()
+            .expect(this.labels.timer.exists).ok()
+            .expect(this.labels.timer.textContent).contains("20:00")
+            .expect(this.fields.emailTo.visible).notOk();
+    }
+
+    async verifySubjectContains(snippet) {
+        await this.t.expect(this.fields.emailSubject.value).contains(snippet);
+    }
+
+    async verifyEmailContains(snippet) {
+        await this.t.expect(this.fields.email.value).contains(snippet);
+    }
+
+    async verifyEmailIs(completeText) {
+        await this.t
+            // this will pause execution so you can copy-paste the email text (but do take care to proofread it!)
+            // .debug()
+            .expect(this.fields.email.value).eql(completeText);
     }
 }
 

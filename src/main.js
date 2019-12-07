@@ -6,6 +6,8 @@ var pageUrl = 'http://localhost:63342/reg-hotel-booking/';
 fixture `Getting Started`
     .page(pageUrl);
 
+// tests for title page
+
 test('T1: main URL shows title page in English', async t => {
     const p = new TitlePage(t);
     await p.checkLanguage();
@@ -27,6 +29,8 @@ test('T3: title page: switching language back to English works', async t => {
 test('T4: title page: continuing to the form page works', async t => {
     await Pages.progressToFormPage(t);
 });
+
+// tests for form page
 
 test('F1: form page: initial setup is sensible', async t => {
     const fp = await Pages.progressToFormPage(t);
@@ -137,7 +141,7 @@ test('F12: form page: comment length limit', async t => {
     await fp.verifyCommentHasError();
 });
 
-// TODO implement test cases E1 - E14 (partially done)
+// tests for email page
 
 test('E1: email page: before secret is revealed', async t => {
     const fp = await Pages.progressToFormPage(t);
@@ -148,8 +152,7 @@ test('E1: email page: before secret is revealed', async t => {
     // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
     const ep = fp.toEmailPage();
     await ep.verifyNotReady();
-
-    // TODO implement more checks (secret NOT shown, To: hidden)
+    await TestData.verifyMailBefore(ep);
 });
 
 test('E2: email page: after secret is revealed', async t => {
@@ -161,8 +164,7 @@ test('E2: email page: after secret is revealed', async t => {
 
     const ep = fp.toEmailPage();
     await ep.verifyReady();
-
-    // TODO implement more checks (secret shown, To: visible)
+    await TestData.verifyMailAfter(ep);
 });
 
 test('E3: email page: German, single, 1st', async t => {
@@ -175,8 +177,7 @@ test('E3: email page: German, single, 1st', async t => {
 
     // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
     const ep = fp.toEmailPage();
-
-    // TODO implement checks: mail text
+    await TestData.verifyMailGermanSingleFirst(ep);
 });
 
 test('E4: email page: German, double, 2nd, p2 no info', async t => {
@@ -191,8 +192,7 @@ test('E4: email page: German, double, 2nd, p2 no info', async t => {
 
     // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
     const ep = fp.toEmailPage();
-
-    // TODO implement checks: mail text, To:
+    await TestData.verifyMailGermanDoubleSecond(ep);
 });
 
 test('E5: email page: German, triple, 3rd', async t => {
@@ -208,11 +208,46 @@ test('E5: email page: German, triple, 3rd', async t => {
 
     // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
     const ep = fp.toEmailPage();
-
-    // TODO implement checks: mail text
+    await TestData.verifyMailGermanTripleThird(ep);
 });
 
-// TODO E6 = E3 in English (leave out switchToGerman call)
-// TODO E7 = E4 in English (leave out switchToGerman call)
-// TODO E8 = E5 in English (leave out switchToGerman call)
+test('E6: email page: English, single, 1st', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await TestData.fillFirstPerson(fp);
+    await fp.setRoomType(1);
+    await fp.acceptDisclaimer();
+    await fp.submit();
 
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
+    const ep = fp.toEmailPage();
+    await TestData.verifyMailEnglishSingleFirst(ep);
+});
+
+test('E7: email page: English, double, 2nd, p2 no info', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.setAutomatedTestOverride();
+    await fp.setRoomsize(2);
+    await TestData.fillFirstPerson(fp);
+    await fp.setRoomType(2);
+    await fp.acceptDisclaimer();
+    await fp.submit();
+
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
+    const ep = fp.toEmailPage();
+    await TestData.verifyMailEnglishDoubleSecond(ep);
+});
+
+test('E8: email page: English, triple, 3rd', async t => {
+    const fp = await Pages.progressToFormPage(t);
+    await fp.setRoomsize(3);
+    await TestData.fillFirstPerson(fp);
+    await TestData.fillSecondPerson(fp);
+    await TestData.fillThirdPerson(fp);
+    await fp.setRoomType(3);
+    await fp.acceptDisclaimer();
+    await fp.submit();
+
+    // here we do not use the automated testing override - should lead to "not ready" until it is too late anyway
+    const ep = fp.toEmailPage();
+    await TestData.verifyMailEnglishTripleThird(ep);
+});

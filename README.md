@@ -103,12 +103,12 @@ Configure a node.js runtime configuration with
    (and the room type is spelled out, not given as a number)
    (and exactly three sets of personal info are printed in the email, with the second and third being shown as
    not provided)
- - E9: On the email page, if a long message was entered in the comments field, it is included as is in the mail
- - E10: On the email page, switching languages from German to English works, and the mail properly changes language
+ - E9: TODO: On the email page, if a long message was entered in the comments field, it is included as is in the mail
+ - E10: TODO:On the email page, switching languages from German to English works, and the mail properly changes language
    (including field content formatting, use case E3 above)
- - E11: On the email page, switching languages from English to German works, and the mail properly changes language 
+ - E11: TODO:On the email page, switching languages from English to German works, and the mail properly changes language 
    (including field content formatting, use case E8 above to test a different combination)
- - E12: On the email page, the content of all input fields on the email page cannot be edited
+ - E12: TODO:On the email page, the content of all input fields on the email page cannot be edited
  - E13 TODO: On the email page, there is an easy to understand way to get back to the form page 
  - E14 TODO: On the email page, the page states how long until the secret code will be made available, and then
    it automatically reloads with all information intact

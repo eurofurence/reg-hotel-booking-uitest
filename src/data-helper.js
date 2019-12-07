@@ -117,4 +117,239 @@ export class TestData {
             return "08/23/2020";
         }
     }
+
+    static async verifyMailBefore(ep) {
+        var expectedSubjectSnippet = 'Eurofurence 2020 - ■■■■■■■';
+        var expectedEmailSnippet = "Codeword:    ■■■■■■■";
+        if (ep.language === "de") {
+            expectedEmailSnippet = "Codewort:    ■■■■■■■";
+        }
+
+        await ep.verifySubjectContains(expectedSubjectSnippet);
+        await ep.verifyEmailContains(expectedEmailSnippet);
+    }
+
+    static async verifyMailAfter(ep) {
+        var expectedSubjectSnippet = 'Eurofurence 2020 - demosecret';
+        var expectedEmailSnippet = "Codeword:    demosecret";
+        if (ep.language === "de") {
+            expectedEmailSnippet = "Codewort:    demosecret";
+        }
+
+        await ep.verifySubjectContains(expectedSubjectSnippet);
+        await ep.verifyEmailContains(expectedEmailSnippet);
+    }
+
+    static async verifyMailGermanSingleFirst(ep) {
+        var expectedMailtext = "Sehr geehrte Damen und Herren,\n" +
+            "\n" +
+            "Ich möchte die folgende Reservierung vornehmen:\n" +
+            "\n" +
+            "Keyword:     Eurofurence 2020\n" +
+            "Codewort:    ■■■■■■■\n" +
+            "\n" +
+            "Zimmertyp:   Standard Zimmer\n" +
+            "Personen:    1 Person(en)\n" +
+            "\n" +
+            "Anreise:     19.08.2020\n" +
+            "Abreise:     23.08.2020\n" +
+            "\n" +
+            "1. Person und Hauptkontakt:\n" +
+            "             John Tester1\n" +
+            "             Teststraße 53\n" +
+            "             12345 Berlin\n" +
+            "             Germany\n" +
+            "             uitester1@mailinator.com\n" +
+            "             +49 111 1111 111\n" +
+            "\n" +
+            "Vielen Dank!\n" +
+            "\n" +
+            "Mit freundlichen Grüßen,\n" +
+            "John Tester1\n";
+        await ep.verifyEmailIs(expectedMailtext);
+    }
+
+    static async verifyMailGermanDoubleSecond(ep) {
+        var expectedMailtext = "Sehr geehrte Damen und Herren,\n" +
+            "\n" +
+            "Ich möchte die folgende Reservierung vornehmen:\n" +
+            "\n" +
+            "Keyword:     Eurofurence 2020\n" +
+            "Codewort:    demosecret\n" +
+            "\n" +
+            "Zimmertyp:   Deluxe Zimmer\n" +
+            "Personen:    2 Person(en)\n" +
+            "\n" +
+            "Anreise:     19.08.2020\n" +
+            "Abreise:     23.08.2020\n" +
+            "\n" +
+            "1. Person und Hauptkontakt:\n" +
+            "             John Tester1\n" +
+            "             Teststraße 53\n" +
+            "             12345 Berlin\n" +
+            "             Germany\n" +
+            "             uitester1@mailinator.com\n" +
+            "             +49 111 1111 111\n" +
+            "\n" +
+            "2. Person:\n" +
+            "             (Angaben nicht verfügbar)\n" +
+            "\n" +
+            "Vielen Dank!\n" +
+            "\n" +
+            "Mit freundlichen Grüßen,\n" +
+            "John Tester1\n";
+        await ep.verifyEmailIs(expectedMailtext);
+    }
+
+    static async verifyMailGermanTripleThird(ep) {
+        var expectedMailtext = "Sehr geehrte Damen und Herren,\n" +
+            "\n" +
+            "Ich möchte die folgende Reservierung vornehmen:\n" +
+            "\n" +
+            "Keyword:     Eurofurence 2020\n" +
+            "Codewort:    ■■■■■■■\n" +
+            "\n" +
+            "Zimmertyp:   Junior Suite\n" +
+            "Personen:    3 Person(en)\n" +
+            "\n" +
+            "Anreise:     19.08.2020\n" +
+            "Abreise:     23.08.2020\n" +
+            "\n" +
+            "1. Person und Hauptkontakt:\n" +
+            "             John Tester1\n" +
+            "             Teststraße 53\n" +
+            "             12345 Berlin\n" +
+            "             Germany\n" +
+            "             uitester1@mailinator.com\n" +
+            "             +49 111 1111 111\n" +
+            "\n" +
+            "2. Person:\n" +
+            "             Paula Tester2\n" +
+            "             Teststraße 54\n" +
+            "             80123 München\n" +
+            "             Germany\n" +
+            "             uitester2@mailinator.com\n" +
+            "             0222 2222 222\n" +
+            "\n" +
+            "3. Person:\n" +
+            "             ÄÖÜßäöü Tester3\n" +
+            "             Eichhörnchenweg 26746412634\n" +
+            "             Dover PGK-3MQ\n" +
+            "             United Kingdom\n" +
+            "             uitester3@mailinator.com\n" +
+            "             +40 126721 231683 21678 326 632 621 362763836216328126386\n" +
+            "\n" +
+            "\n" +
+            "Vielen Dank!\n" +
+            "\n" +
+            "Mit freundlichen Grüßen,\n" +
+            "John Tester1\n";
+        await ep.verifyEmailIs(expectedMailtext);
+    }
+
+    static async verifyMailEnglishSingleFirst(ep) {
+        var expectedMailtext = "Dear Sir or Madam!\n" +
+            "\n" +
+            "I would like to make the following reservation:\n" +
+            "\n" +
+            "Keyword:     Eurofurence 2020\n" +
+            "Codeword:    ■■■■■■■\n" +
+            "\n" +
+            "Room Type:   Standard Room\n" +
+            "Occupancy:   1 person(s)\n" +
+            "\n" +
+            "Arrival:     08/19/2020\n" +
+            "Departure:   08/23/2020\n" +
+            "\n" +
+            "1st Person and main contact:\n" +
+            "             John Tester1\n" +
+            "             Teststraße 53\n" +
+            "             12345 Berlin\n" +
+            "             Germany\n" +
+            "             uitester1@mailinator.com\n" +
+            "             +49 111 1111 111\n" +
+            "\n" +
+            "Thank You!\n" +
+            "\n" +
+            "Best regards,\n" +
+            "John Tester1\n";
+        await ep.verifyEmailIs(expectedMailtext);
+    }
+
+    static async verifyMailEnglishDoubleSecond(ep) {
+        var expectedMailtext = "Dear Sir or Madam!\n" +
+            "\n" +
+            "I would like to make the following reservation:\n" +
+            "\n" +
+            "Keyword:     Eurofurence 2020\n" +
+            "Codeword:    demosecret\n" +
+            "\n" +
+            "Room Type:   Deluxe Room\n" +
+            "Occupancy:   2 person(s)\n" +
+            "\n" +
+            "Arrival:     08/19/2020\n" +
+            "Departure:   08/23/2020\n" +
+            "\n" +
+            "1st Person and main contact:\n" +
+            "             John Tester1\n" +
+            "             Teststraße 53\n" +
+            "             12345 Berlin\n" +
+            "             Germany\n" +
+            "             uitester1@mailinator.com\n" +
+            "             +49 111 1111 111\n" +
+            "\n" +
+            "2nd Person:\n" +
+            "             (info not available)\n" +
+            "\n" +
+            "Thank You!\n" +
+            "\n" +
+            "Best regards,\n" +
+            "John Tester1\n";
+        await ep.verifyEmailIs(expectedMailtext);
+    }
+
+    static async verifyMailEnglishTripleThird(ep) {
+        var expectedMailtext = "Dear Sir or Madam!\n" +
+            "\n" +
+            "I would like to make the following reservation:\n" +
+            "\n" +
+            "Keyword:     Eurofurence 2020\n" +
+            "Codeword:    ■■■■■■■\n" +
+            "\n" +
+            "Room Type:   Junior Suite\n" +
+            "Occupancy:   3 person(s)\n" +
+            "\n" +
+            "Arrival:     08/19/2020\n" +
+            "Departure:   08/23/2020\n" +
+            "\n" +
+            "1st Person and main contact:\n" +
+            "             John Tester1\n" +
+            "             Teststraße 53\n" +
+            "             12345 Berlin\n" +
+            "             Germany\n" +
+            "             uitester1@mailinator.com\n" +
+            "             +49 111 1111 111\n" +
+            "\n" +
+            "2nd Person:\n" +
+            "             Paula Tester2\n" +
+            "             Teststraße 54\n" +
+            "             80123 München\n" +
+            "             Germany\n" +
+            "             uitester2@mailinator.com\n" +
+            "             0222 2222 222\n" +
+            "\n" +
+            "3rd Person:\n" +
+            "             ÄÖÜßäöü Tester3\n" +
+            "             Eichhörnchenweg 26746412634\n" +
+            "             Dover PGK-3MQ\n" +
+            "             United Kingdom\n" +
+            "             uitester3@mailinator.com\n" +
+            "             +40 126721 231683 21678 326 632 621 362763836216328126386\n" +
+            "\n" +
+            "Thank You!\n" +
+            "\n" +
+            "Best regards,\n" +
+            "John Tester1\n";
+        await ep.verifyEmailIs(expectedMailtext);
+    }
 }
