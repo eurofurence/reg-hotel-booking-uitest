@@ -130,10 +130,10 @@ export class TestData {
     }
 
     static async verifyMailAfter(ep) {
-        var expectedSubjectSnippet = 'Eurofurence 2020 - demosecret';
-        var expectedEmailSnippet = "Codeword:    demosecret";
+        var expectedSubjectSnippet = 'Eurofurence 2020 - TestSecret';
+        var expectedEmailSnippet = "Codeword:    TestSecret";
         if (ep.language === "de") {
-            expectedEmailSnippet = "Codewort:    demosecret";
+            expectedEmailSnippet = "Codewort:    TestSecret";
         }
 
         await ep.verifySubjectContains(expectedSubjectSnippet);
@@ -175,7 +175,7 @@ export class TestData {
             "Ich möchte die folgende Reservierung vornehmen:\n" +
             "\n" +
             "Keyword:     Eurofurence 2020\n" +
-            "Codewort:    demosecret\n" +
+            "Codewort:    TestSecret\n" +
             "\n" +
             "Zimmertyp:   Deluxe Zimmer\n" +
             "Personen:    2 Person(en)\n" +
@@ -282,7 +282,7 @@ export class TestData {
             "I would like to make the following reservation:\n" +
             "\n" +
             "Keyword:     Eurofurence 2020\n" +
-            "Codeword:    demosecret\n" +
+            "Codeword:    TestSecret\n" +
             "\n" +
             "Room Type:   Deluxe Room\n" +
             "Occupancy:   2 person(s)\n" +
