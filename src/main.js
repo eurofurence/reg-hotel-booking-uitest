@@ -3,7 +3,7 @@ import {TestData} from "./data-helper";
 
 var pageUrl = 'http://localhost:63342/reg-hotel-booking/';
 
-fixture `Getting Started`
+fixture `Hotel Booking Tests`
     .page(pageUrl);
 
 // tests for title page
