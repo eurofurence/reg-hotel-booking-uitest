@@ -37,24 +37,24 @@ export class TestData {
     }
 
     static async verifySingleRoomPrices(fp) {
-        await fp.verifyPrice(1, "90,00");
-        await fp.verifyPrice(2, "105,00");
-        await fp.verifyPrice(3, "153,00");
-        await fp.verifyPrice(4, "173,00");
+        await fp.verifyPrice(1, "115,00");
+        await fp.verifyPrice(2, "130,00");
+        await fp.verifyPrice(3, "178,00");
+        await fp.verifyPrice(4, "198,00");
     }
 
     static async verifyDoubleRoomPrices(fp) {
-        await fp.verifyPrice(1, "120,00");
-        await fp.verifyPrice(2, "140,00");
-        await fp.verifyPrice(3, "178,00");
-        await fp.verifyPrice(4, "208,00");
+        await fp.verifyPrice(1, "140,00");
+        await fp.verifyPrice(2, "160,00");
+        await fp.verifyPrice(3, "198,00");
+        await fp.verifyPrice(4, "228,00");
     }
 
     static async verifyTripleRoomPrices(fp) {
-        await fp.verifyPrice(1, "195,00");
-        await fp.verifyPrice(2, "210,00");
-        await fp.verifyPrice(3, "240,00");
-        await fp.verifyPrice(4, "270,00");
+        await fp.verifyPrice(1, "215,00");
+        await fp.verifyPrice(2, "230,00");
+        await fp.verifyPrice(3, "260,00");
+        await fp.verifyPrice(4, "290,00");
     }
 
     static async enterLongComment(fp, counter) {
