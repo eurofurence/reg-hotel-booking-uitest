@@ -34,12 +34,14 @@ test('T4: title page: continuing to the form page works', async t => {
 
 test('F1: form page: initial setup is sensible', async t => {
     const fp = await Pages.progressToFormPage(t);
-    await fp.verifyRoomsizeAndFieldsEnabled(1);
+    await fp.verifyRoomsizeAndFieldsEnabled(2);
     await fp.verifyInitialState();
 });
 
 test('F2: form page: filling in single room works, shows correct prices', async t => {
     const fp = await Pages.progressToFormPage(t);
+    await fp.setRoomsize(1);
+    await fp.verifyRoomsizeAndFieldsEnabled(1);
 
     await TestData.fillFirstPerson(fp);
     await TestData.verifySingleRoomPrices(fp);
@@ -47,8 +49,6 @@ test('F2: form page: filling in single room works, shows correct prices', async 
 
 test('F3: form page: filling in double room works, shows correct prices', async t => {
     const fp = await Pages.progressToFormPage(t);
-    await fp.setRoomsize(2);
-    await fp.verifyRoomsizeAndFieldsEnabled(2);
 
     await TestData.fillFirstPerson(fp);
     await TestData.fillSecondPerson(fp);
@@ -145,6 +145,7 @@ test('F12: form page: comment length limit', async t => {
 
 test('E1: email page: before secret is revealed', async t => {
     const fp = await Pages.progressToFormPage(t);
+    await fp.setRoomsize(1);
     await TestData.fillFirstPerson(fp);
     await fp.acceptDisclaimer();
     await fp.submit();
@@ -158,6 +159,7 @@ test('E1: email page: before secret is revealed', async t => {
 test('E2: email page: after secret is revealed', async t => {
     const fp = await Pages.progressToFormPage(t);
     await fp.setAutomatedTestOverride();
+    await fp.setRoomsize(1);
     await TestData.fillFirstPerson(fp);
     await fp.acceptDisclaimer();
     await fp.submit();
@@ -170,6 +172,7 @@ test('E2: email page: after secret is revealed', async t => {
 test('E3: email page: German, single, 1st', async t => {
     const fp = await Pages.progressToFormPage(t);
     await fp.switchToGerman();
+    await fp.setRoomsize(1);
     await TestData.fillFirstPerson(fp);
     await fp.setRoomType(1);
     await fp.acceptDisclaimer();
@@ -213,6 +216,7 @@ test('E5: email page: German, triple, 3rd', async t => {
 
 test('E6: email page: English, single, 1st', async t => {
     const fp = await Pages.progressToFormPage(t);
+    await fp.setRoomsize(1);
     await TestData.fillFirstPerson(fp);
     await fp.setRoomType(1);
     await fp.acceptDisclaimer();

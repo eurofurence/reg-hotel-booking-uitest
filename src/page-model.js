@@ -137,8 +137,8 @@ export class FormPage {
 
     async verifyInitialState() {
         await this.t
-            .expect(this.fields.roomsizes[0].checked).eql(true)
-            .expect(this.fields.roomsizes[1].checked).eql(false)
+            .expect(this.fields.roomsizes[0].checked).eql(false)
+            .expect(this.fields.roomsizes[1].checked).eql(true)
             .expect(this.fields.roomsizes[2].checked).eql(false)
             .expect(this.fields.arrival.value).eql('08/19/2020')
             .expect(this.fields.departure.value).eql('08/23/2020')
@@ -360,7 +360,7 @@ export class EmailPage {
             .expect(this.labels.timeError.visible).notOk()
             .expect(this.labels.timer.exists).ok()
             .expect(this.labels.timer.textContent).contains("20:00")
-            .expect(this.fields.emailTo.visible).notOk();
+            .expect(this.fields.emailTo.visible).ok();
     }
 
     async verifySubjectContains(snippet) {
