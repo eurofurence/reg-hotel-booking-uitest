@@ -181,12 +181,16 @@ export class FormPage {
 
     async verifyName(personNo, expectedValue) {
         await this.t
-            .expect(this.fields.name[personNo - 1].value).eql(expectedValue);
+            .expect(
+                this.fields.name[personNo - 1].value
+            ).eql(expectedValue);
     }
 
     async verifyEmail(personNo, expectedValue) {
         await this.t
-            .expect(this.fields.email[personNo - 1].value).eql(expectedValue);
+            .expect(
+                this.fields.email[personNo - 1].value
+            ).eql(expectedValue);
     }
 
     async setArrival(value) {
@@ -207,7 +211,9 @@ export class FormPage {
 
     async verifyPrice(roomtypeNo, valueString) {
         await this.t
-            .expect(this.labels.price[roomtypeNo - 1].innerText).eql("(" + valueString + " €*)");
+            .expect(
+                this.labels.price[roomtypeNo - 1].innerText
+            ).eql("(" + valueString + " €*)");
     }
 
     async setComment(value) {
@@ -290,9 +296,15 @@ export class FormPage {
 
         await this.t
             .expect(this.getLocation()).contains('/' + this.language + '/')
-            .expect(this.labels.roomsize.innerText).eql(expected[this.language].roomsize)
-            .expect(this.fields.arrival.value).eql(expectedArrival)
-            .expect(this.fields.departure.value).eql(expectedDeparture);
+            .expect(
+                this.labels.roomsize.innerText
+            ).eql(expected[this.language].roomsize)
+            .expect(
+                this.fields.arrival.value
+            ).eql(expectedArrival)
+            .expect(
+                this.fields.departure.value
+            ).eql(expectedDeparture);
     }
 
     async acceptDisclaimer() {
