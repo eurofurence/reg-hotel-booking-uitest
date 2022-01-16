@@ -37,24 +37,24 @@ export class TestData {
     }
 
     static async verifySingleRoomPrices(fp) {
-        await fp.verifyPrice(1, "115,00");
-        await fp.verifyPrice(2, "130,00");
-        await fp.verifyPrice(3, "178,00");
-        await fp.verifyPrice(4, "198,00");
+        await fp.verifyPrice(1, "170,00");
+        await fp.verifyPrice(2, "190,00");
+        await fp.verifyPrice(3, "228,00");
+        await fp.verifyPrice(4, "258,00");
     }
 
     static async verifyDoubleRoomPrices(fp) {
-        await fp.verifyPrice(1, "140,00");
-        await fp.verifyPrice(2, "160,00");
-        await fp.verifyPrice(3, "198,00");
-        await fp.verifyPrice(4, "228,00");
+        await fp.verifyPrice(1, "180,00");
+        await fp.verifyPrice(2, "200,00");
+        await fp.verifyPrice(3, "238,00");
+        await fp.verifyPrice(4, "268,00");
     }
 
     static async verifyTripleRoomPrices(fp) {
-        await fp.verifyPrice(1, "215,00");
-        await fp.verifyPrice(2, "230,00");
-        await fp.verifyPrice(3, "260,00");
-        await fp.verifyPrice(4, "290,00");
+        await fp.verifyPrice(1, "255,00");
+        await fp.verifyPrice(2, "270,00");
+        await fp.verifyPrice(3, "300,00");
+        await fp.verifyPrice(4, "330,00");
     }
 
     static async enterLongComment(fp, counter) {
@@ -88,38 +88,38 @@ export class TestData {
 
     static expectedArrival(fp) {
         if (fp.language === "de") {
-            return "16.08.2020";
+            return "21.08.2022";
         } else {
-            return "08/16/2020";
+            return "08/21/2022";
         }
     }
 
     static expectedDeparture(fp) {
         if (fp.language === "de") {
-            return "24.08.2020";
+            return "29.08.2022";
         } else {
-            return "08/24/2020";
+            return "08/29/2022";
         }
     }
 
     static defaultArrival(fp) {
         if (fp.language === "de") {
-            return "19.08.2020";
+            return "24.08.2022";
         } else {
-            return "08/19/2020";
+            return "08/24/2022";
         }
     }
 
     static defaultDeparture(fp) {
         if (fp.language === "de") {
-            return "23.08.2020";
+            return "28.08.2022";
         } else {
-            return "08/23/2020";
+            return "08/28/2022";
         }
     }
 
     static async verifyMailBefore(ep) {
-        var expectedSubjectSnippet = 'Eurofurence 2020 - ■■■■■■■';
+        var expectedSubjectSnippet = 'Eurofurence 2022 - ■■■■■■■';
         var expectedEmailSnippet = "Codeword:    ■■■■■■■";
         if (ep.language === "de") {
             expectedEmailSnippet = "Codewort:    ■■■■■■■";
@@ -130,7 +130,7 @@ export class TestData {
     }
 
     static async verifyMailAfter(ep) {
-        var expectedSubjectSnippet = 'Eurofurence 2020 - [demo-secret]';
+        var expectedSubjectSnippet = 'Eurofurence 2022 - [demo-secret]';
         var expectedEmailSnippet = "Codeword:    [demo-secret]";
         if (ep.language === "de") {
             expectedEmailSnippet = "Codewort:    [demo-secret]";
@@ -145,14 +145,14 @@ export class TestData {
             "\n" +
             "Ich möchte die folgende Reservierung vornehmen:\n" +
             "\n" +
-            "Keyword:     Eurofurence 2020\n" +
+            "Keyword:     Eurofurence 2022\n" +
             "Codewort:    ■■■■■■■\n" +
             "\n" +
             "Zimmertyp:   Standard Zimmer\n" +
             "Personen:    1 Person(en)\n" +
             "\n" +
-            "Anreise:     19.08.2020\n" +
-            "Abreise:     23.08.2020\n" +
+            "Anreise:     24.08.2022\n" +
+            "Abreise:     28.08.2022\n" +
             "\n" +
             "1. Person und Hauptkontakt:\n" +
             "             John Tester1\n" +
@@ -174,14 +174,14 @@ export class TestData {
             "\n" +
             "Ich möchte die folgende Reservierung vornehmen:\n" +
             "\n" +
-            "Keyword:     Eurofurence 2020\n" +
+            "Keyword:     Eurofurence 2022\n" +
             "Codewort:    [demo-secret]\n" +
             "\n" +
             "Zimmertyp:   Deluxe Zimmer\n" +
             "Personen:    2 Person(en)\n" +
             "\n" +
-            "Anreise:     19.08.2020\n" +
-            "Abreise:     23.08.2020\n" +
+            "Anreise:     24.08.2022\n" +
+            "Abreise:     28.08.2022\n" +
             "\n" +
             "1. Person und Hauptkontakt:\n" +
             "             John Tester1\n" +
@@ -206,14 +206,14 @@ export class TestData {
             "\n" +
             "Ich möchte die folgende Reservierung vornehmen:\n" +
             "\n" +
-            "Keyword:     Eurofurence 2020\n" +
+            "Keyword:     Eurofurence 2022\n" +
             "Codewort:    ■■■■■■■\n" +
             "\n" +
             "Zimmertyp:   Junior Suite\n" +
             "Personen:    3 Person(en)\n" +
             "\n" +
-            "Anreise:     19.08.2020\n" +
-            "Abreise:     23.08.2020\n" +
+            "Anreise:     24.08.2022\n" +
+            "Abreise:     28.08.2022\n" +
             "\n" +
             "1. Person und Hauptkontakt:\n" +
             "             John Tester1\n" +
@@ -252,14 +252,14 @@ export class TestData {
             "\n" +
             "I would like to make the following reservation:\n" +
             "\n" +
-            "Keyword:     Eurofurence 2020\n" +
+            "Keyword:     Eurofurence 2022\n" +
             "Codeword:    ■■■■■■■\n" +
             "\n" +
             "Room Type:   Standard Room\n" +
             "Occupancy:   1 person(s)\n" +
             "\n" +
-            "Arrival:     08/19/2020\n" +
-            "Departure:   08/23/2020\n" +
+            "Arrival:     08/24/2022\n" +
+            "Departure:   08/28/2022\n" +
             "\n" +
             "1st Person and main contact:\n" +
             "             John Tester1\n" +
@@ -281,14 +281,14 @@ export class TestData {
             "\n" +
             "I would like to make the following reservation:\n" +
             "\n" +
-            "Keyword:     Eurofurence 2020\n" +
+            "Keyword:     Eurofurence 2022\n" +
             "Codeword:    [demo-secret]\n" +
             "\n" +
             "Room Type:   Deluxe Room\n" +
             "Occupancy:   2 person(s)\n" +
             "\n" +
-            "Arrival:     08/19/2020\n" +
-            "Departure:   08/23/2020\n" +
+            "Arrival:     08/24/2022\n" +
+            "Departure:   08/28/2022\n" +
             "\n" +
             "1st Person and main contact:\n" +
             "             John Tester1\n" +
@@ -313,14 +313,14 @@ export class TestData {
             "\n" +
             "I would like to make the following reservation:\n" +
             "\n" +
-            "Keyword:     Eurofurence 2020\n" +
+            "Keyword:     Eurofurence 2022\n" +
             "Codeword:    ■■■■■■■\n" +
             "\n" +
             "Room Type:   Junior Suite\n" +
             "Occupancy:   3 person(s)\n" +
             "\n" +
-            "Arrival:     08/19/2020\n" +
-            "Departure:   08/23/2020\n" +
+            "Arrival:     08/24/2022\n" +
+            "Departure:   08/28/2022\n" +
             "\n" +
             "1st Person and main contact:\n" +
             "             John Tester1\n" +

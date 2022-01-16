@@ -140,8 +140,8 @@ export class FormPage {
             .expect(this.fields.roomsizes[0].checked).eql(false)
             .expect(this.fields.roomsizes[1].checked).eql(true)
             .expect(this.fields.roomsizes[2].checked).eql(false)
-            .expect(this.fields.arrival.value).eql('08/19/2020')
-            .expect(this.fields.departure.value).eql('08/23/2020')
+            .expect(this.fields.arrival.value).eql('08/24/2022')
+            .expect(this.fields.departure.value).eql('08/28/2022')
             .expect(this.fields.roomtypes[0].checked).eql(true)
             .expect(this.fields.roomtypes[1].checked).eql(false)
             .expect(this.fields.roomtypes[2].checked).eql(false)
@@ -371,7 +371,7 @@ export class EmailPage {
             .expect(this.navs.readyLink.visible).notOk()
             .expect(this.labels.timeError.visible).notOk()
             .expect(this.labels.timer.exists).ok()
-            .expect(this.labels.timer.textContent).contains("20:00")
+            .expect(this.labels.timer.textContent).contains("07:00")
             .expect(this.fields.emailTo.visible).ok();
     }
 

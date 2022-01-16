@@ -1,7 +1,7 @@
 import {TitlePage, FormPage, EmailPage, Pages} from "./page-model";
 import {TestData} from "./data-helper";
 
-var pageUrl = 'http://localhost:63343/reg-hotel-booking/';
+var pageUrl = 'http://localhost:63344/reg-hotel-booking/';
 
 fixture `Hotel Booking Tests`
     .page(pageUrl);
